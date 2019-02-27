@@ -1,6 +1,6 @@
 @foreach ($categories as $category)
 
-    <option value="{{$category_list->id or ""}}"
+    <option value="{{$category->id ?? ""}}"
         
         @isset ($article->id)
             @foreach ($article->categories as $category_article)
@@ -11,13 +11,13 @@
         @endisset
         
         >
-        {!! $delimiter or "" !!}{{$category->title or ""}}
+        {!! $delimiter ?? "" !!}{{$category->title ?? ""}}
     </option>
     
     @if (count($category->children) > 0)
     
         @include('admin.articles.partials.categories', [
-            'categories' => $category_list->children,
+            'categories' => $category->children,
             'delimiter' => ' - ' . $delimiter
             ])
     

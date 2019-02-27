@@ -43,8 +43,13 @@ class ArticleController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+        $article = Article::create($request->all());
+
+        if($request->input('categories')) :
+            $article->categories()->attach($request->input('categories'));
+        endif;
+
+        return redirect()->route('admin.article.index');}
 
     /**
      * Display the specified resource.

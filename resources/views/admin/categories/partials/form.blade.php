@@ -10,10 +10,10 @@
 </select>
 
 <label for="">Наименование</label>
-<input type="text" class="form-control" name="title" placeholder="Заголовок категории" required>
+<input type="text" class="form-control" name="title" placeholder="Заголовок категории" value="{{$category->title ?? ""}}" required>
 
 <label for="">Slug</label>
-<input type="text" class="form-control" name="slug" placeholder="Автоматическая генерация" readonly="">
+<input type="text" class="form-control" name="slug" placeholder="Автоматическая генерация" value="{{$category->slug ?? ""}}" readonly="">
 
 <label for="">Родительская категория</label>
 <select class="form-control" name="parent_id">

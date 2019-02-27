@@ -1,6 +1,6 @@
 @foreach ($categories as $category_list)
 
-    <option value="{{$category_list->id or ""}}"
+    <option value="{{$category_list->id ?? ""}}"
         
         @isset ($category->id)
             
@@ -15,7 +15,7 @@
         @endisset
         
         >
-        {!! $delimiter or "" !!}{{$category_list->title or ""}}
+        {!! $delimiter ?? "" !!}{{$category_list->title ?? ""}}
     </option>
     
     @if (count($category_list->children) > 0)
