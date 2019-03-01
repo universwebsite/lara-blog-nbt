@@ -30,7 +30,7 @@ class ArticleController extends Controller
     {
         return view('admin.articles.create', [
            'article' => [],
-           'categories' => Category::with('children')->where('parent_id', '0')->get(),
+           'categories' => Category::with('children')->where('parent_id', 0)->get(),
            'delimiter' => '' 
         ]);
     }
@@ -49,7 +49,8 @@ class ArticleController extends Controller
             $article->categories()->attach($request->input('categories'));
         endif;
 
-        return redirect()->route('admin.article.index');}
+        return redirect()->route('admin.article.index');
+    }
 
     /**
      * Display the specified resource.
@@ -70,7 +71,11 @@ class ArticleController extends Controller
      */
     public function edit(Article $article)
     {
-        //
+        return view('admin.articles.edit', [
+            'article' => $article,
+            'categories' => Category::with('children')->where('parent_id', 0)->get(),
+            'delimiter' => ''
+        ]);
     }
 
     /**
@@ -82,7 +87,13 @@ class ArticleController extends Controller
      */
     public function update(Request $request, Article $article)
     {
-        //
+        $article->update($request->except('slug'));
+
+        if($request->input('categories')) :
+            $article->categories()->attach($request->input('categories'));
+        endif;
+
+        return redirect()->route('admin.article.index');
     }
 
     /**
@@ -93,6 +104,9 @@ class ArticleController extends Controller
      */
     public function destroy(Article $article)
     {
-        //
+        $article->categories()->detach();
+        $article->delete();
+
+        return redirect()->route('admin.article.index');
     }
 }
